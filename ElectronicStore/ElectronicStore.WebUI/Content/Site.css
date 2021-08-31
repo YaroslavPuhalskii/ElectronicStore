@@ -1,0 +1,102 @@
+﻿body {
+    padding-bottom: 20px;
+    margin: 0;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+/*------ Layout --------*/
+
+body {
+    font-family: Cambria, Georgia, "Times New Roman";
+}
+
+div#header div.title, div.item.h3, div.item h4, div.pager a {
+    font: bold 1em "Arial Narrow", "Franklin Gothic Medium", Arial;
+}
+
+div#header {
+    background-color: #444;
+    border-bottom: 2px solid #111;
+    color: white;
+    margin: 0;
+}
+
+div#header div.title {
+    font-size: 2em;
+    padding: .6em;
+}
+
+div#content {
+    border-left: 2px solid gray;
+    height: 500px;
+    margin-left: 9em;
+}
+
+div#categories {
+    float: left;
+    width: 8em;
+    padding: .3em;
+}
+
+div.item {
+    border-top: 1px dotted gray;
+    padding-top: .7em;
+    margin-bottom: .7em;
+}
+
+div.item::after first-child {
+    border-top: none;
+    padding-top: 0;
+}
+
+div.item h3 {
+    font-size: 1.3em;
+    margin: 0 0 .25em 0;
+}
+
+div.item h4 {
+    font-size: 1.1em;
+    margin: .4em 0 0 0;
+}
+
+div.pager {
+    text-align: right;
+    border-top: 2px solid silver;
+    padding: .5em 0 0 0;
+    margin-top: 1em;
+}
+
+div.pager a {
+    font-size: 1.1em;
+    color: #666;
+    text-decoration: none;
+    padding: 0 .4em 0 .4em;
+}
+
+div.pager a:hover {
+    background-color: silver;
+}
+
+div.pager a.selected {
+    background-color: #353535;
+    color: white;
+}
