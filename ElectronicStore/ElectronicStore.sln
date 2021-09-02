@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElectronicStore.Core", "Ele
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElectronicStore.WebUI", "ElectronicStore.WebUI\ElectronicStore.WebUI.csproj", "{85454954-AA71-439F-B88C-D47AA53DF56A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElectronicStore.Test", "ElectronicStore.Test\ElectronicStore.Test.csproj", "{799A297D-14C9-49D9-BEE4-CDF6A212E0B3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{85454954-AA71-439F-B88C-D47AA53DF56A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{85454954-AA71-439F-B88C-D47AA53DF56A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{85454954-AA71-439F-B88C-D47AA53DF56A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{799A297D-14C9-49D9-BEE4-CDF6A212E0B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{799A297D-14C9-49D9-BEE4-CDF6A212E0B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{799A297D-14C9-49D9-BEE4-CDF6A212E0B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{799A297D-14C9-49D9-BEE4-CDF6A212E0B3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
