@@ -1,0 +1,30 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+<h2>Информаия о продуктах</h2>
+
+<div class="cont">
+    <div class="loader" id="loader">Loading...</div>
+</div>
+
+<div class="lines">
+    <div id="window"></div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        loadDate();
+    });
+
+    function loadDate() {
+        $('#loader').css('display', 'display');
+        $("#window").load('@Url.Action("Load", "Product")',
+            function () {
+                $('#loader').css('display', 'none');
+            });
+    }
+</script>
+
