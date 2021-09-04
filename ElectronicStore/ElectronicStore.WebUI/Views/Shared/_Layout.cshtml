@@ -4,21 +4,35 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title</title>
-
-    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
-
+    <title>@ViewBag.Title - приложение ASP.NET</title>
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <link href="Content/Site.css" rel="stylesheet" type="text/css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
     <div id="header">
         <div class="title">10th Element</div>
     </div>
     <div id="categories">
-        We will put something        We will put something        We will put something        We will put something        We will put something
+        <ul class="menu">
+            <li><a id="menu-a" href="~/Product/Index">Products</a></li>
+            <li><a id="menu-a" href="#">Clients</a></li>
+            <li><a id="menu-a" href="#">Sellers</a></li>
+            <li><a id="menu-a" href="#">Sales</a></li>
+        </ul>
     </div>
     <div id="content">
         @RenderBody()
     </div>
-   
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
 </body>
 </html>
+

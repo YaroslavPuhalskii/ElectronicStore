@@ -1,0 +1,33 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+
+<h2>Админка</h2>
+
+<ul class="list-group list-group-horizontal">
+    <li class="list-group-item"><a href="#" onclick="return openProductsform()">Products</a></li>
+    <li class="list-group-item"><a href="#" onclick="return openProductsform()">Clients</a></li>
+    <li class="list-group-item"><a href="#" onclick="return openProductsform()">Sellers</a></li>
+    <li class="list-group-item"><a href="#" onclick="return openProductsform()">Sales</a></li>
+</ul>
+
+<div class="lines">
+    <div id="window"></div>
+    <div id="modalWindow"></div>
+</div>
+
+<script>
+    /*Products*/
+    openProductsform = function () {
+        $('#window').load('@Url.Action("LoadProducts", "Admin")');
+        return false;
+    }
+
+    openEditProductform = function (id) {
+        $('#modalWindow').load('@Url.Action("EditProduct", "Admin")/' + id);
+        return false;
+    }
+</script>

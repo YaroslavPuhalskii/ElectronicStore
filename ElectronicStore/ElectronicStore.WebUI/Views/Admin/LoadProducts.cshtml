@@ -1,0 +1,33 @@
+﻿@model PagedList.IPagedList<ElectronicStore.WebUI.Models.ProductIndexView>
+@using PagedList.Mvc;
+
+
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Function</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td><h4>@item.ProductId</h4></td>
+            <td>@Html.DisplayFor(modelItem => item.Name)</td>
+            <td>@Html.DisplayFor(modelItem => item.Price)</td>
+            <td>
+                <a href="#" onclick="return openEditProductform(@item.ProductId)">Edit</a> |
+                <a href="#" onclick="return openDeleteProductform(@item.ProductId)">Delete</a>
+            </td>
+        </tr>
+    }
+</table>
+
+Страница @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) из @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("LoadProducts", new { page }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions() { HttpMethod = "GET", UpdateTargetId = "window" }))

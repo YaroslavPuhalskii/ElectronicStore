@@ -25,10 +25,18 @@ textarea {
 
 /*------ Layout --------*/
 
-a {
-    font-family: 'Besley', serif;
+div#categories a {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 30px;
     text-decoration: none;
+    color: #666;
 }
+
+div#categories a:hover {
+    color: #e5af6c;
+    transition: 0.5s;
+}
+
 
 li {
     list-style-type: none;
@@ -63,7 +71,7 @@ DIV#content {
 
 div#categories {
     float: left;
-    width: 8em;
+    width: 5em;
     padding: .3em;
 }
 
@@ -113,7 +121,7 @@ div.pager a.selected {
 
 .lines {
     margin-left: 50px;
-    margin-top: 50px;
+    margin-top: 15px;
 }
 
 /*--------Loader----------*/
@@ -205,3 +213,54 @@ div.pager a.selected {
 /*-------------------------------*/
 
 /*---menu----*/
+
+ul.menu {
+    margin-top: 20px;
+    padding-inline-start: 15px;
+}
+
+/*---Product - Detail*/
+div.item h6{
+    font-size: 1em;
+    margin-block-start: .1em;
+    margin-block-end: .1em;
+}
+
+div.item a {
+    text-decoration: none;
+    color: #666;
+}
+
+div.item a:hover {
+    color: #e5af6c;
+    transition: 0.5s;
+}
+
+
+/*navigation*/
+.list-group-horizontal .list-group-item
+{
+	display: inline-block;
+}
+.list-group-horizontal .list-group-item
+{
+	margin-bottom: 0;
+	margin-left:-4px;
+	margin-right: 0;
+ 	border-right-width: 0;
+}
+.list-group-horizontal .list-group-item:first-child
+{
+	border-top-right-radius:0;
+	border-bottom-left-radius:20px;
+}
+.list-group-horizontal .list-group-item:last-child
+{
+	border-top-right-radius:20px;
+	border-bottom-left-radius:0;
+	border-right-width: 1px;
+}
+
+.list-group-item {
+    padding: 10px 120px;
+}
