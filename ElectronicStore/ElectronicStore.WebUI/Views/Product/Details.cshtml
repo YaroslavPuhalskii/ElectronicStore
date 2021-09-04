@@ -1,0 +1,29 @@
+﻿@model ElectronicStore.WebUI.Models.ProductIndexView
+
+<div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="nameModalOperation" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal">x</button>
+                <h4 class="modal-title">Информация о модели</h4>
+            </div>
+            <div class="modal-body">
+                <h3><b>Name</b> : @Model.Name</h3>
+                <h3><b>Descroption</b> : @Model.Description</h3>
+                <h3><b>Category</b> : @Model.Category</h3>
+                <h3><b>Price</b> : @Model.Price byn</h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $('#myModal').ready(() => {
+        showForm();
+    });
+
+
+    function showForm() {
+        $('#myModal').modal();
+    }
+</script>

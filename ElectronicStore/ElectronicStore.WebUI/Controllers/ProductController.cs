@@ -28,8 +28,7 @@ namespace ElectronicStore.WebUI.Controllers
         [HttpGet]
         public async Task<PartialViewResult> Load(int? page)
         {
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<Product, ProductIndexView>()
-            .ForMember("Seller", opt => opt.MapFrom(x => x.Seller.Name)));
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<Product, ProductIndexView>());
             var map = new Mapper(config);
             var products = map.Map<List<ProductIndexView>>(await repo.GetItems());
 
@@ -37,6 +36,23 @@ namespace ElectronicStore.WebUI.Controllers
             int pageNumber = page ?? 1;
 
             return PartialView(products.ToPagedList(pageNumber, pageSize));
+        }
+
+        [HttpGet]
+        public async Task<PartialViewResult> Details(int id)
+        {
+            try
+            {
+                var config = new MapperConfiguration(cfg => cfg.CreateMap<Product, ProductIndexView>());
+                var map = new Mapper(config);
+                var product = map.Map<Product, ProductIndexView>(await repo.GetById(id));
+
+                return PartialView(product);
+            }
+            catch
+            {
+                return PartialView("~/Views/Shared/Error.cshtml");
+            }
         }
     }
 }

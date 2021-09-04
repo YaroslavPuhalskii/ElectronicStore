@@ -3,7 +3,7 @@
 }
 
 <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
-<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
 <h2>Информаия о продуктах</h2>
 
 <div class="cont">
@@ -12,6 +12,7 @@
 
 <div class="lines">
     <div id="window"></div>
+    <div id="modalWindow"></div>
 </div>
 
 <script>
@@ -25,6 +26,11 @@
             function () {
                 $('#loader').css('display', 'none');
             });
+    }
+
+    openDetailform = function (id) {
+        $('#modalWindow').load('@Url.Action("Details", "Product")/' + id);
+        return false;
     }
 </script>
 
