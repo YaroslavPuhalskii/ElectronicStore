@@ -29,6 +29,7 @@ namespace ElectronicStore.WebUI.Infrastructure
         public void AddBindings()
         {
             ninjectKernel.Bind<IProductRepo>().To<ProductRepo>();
+            ninjectKernel.Bind<IClientRepo>().To<ClientRepo>();
         }
     }
 }

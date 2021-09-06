@@ -1,0 +1,37 @@
+﻿@model ElectronicStore.WebUI.Models.ClientIndexView
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+
+<h2>Информаия о клиентах</h2>
+
+<div class="cont">
+    <div class="loader" id="loader">Loading...</div>
+</div>
+
+<div class="lines">
+    <div id="window"></div>
+    <div id="modalWindow"></div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        loadDate();
+    });
+
+    function loadDate() {
+        $('#loader').css('display', 'display');
+        $("#window").load('@Url.Action("Load", "Client")',
+            function () {
+                $('#loader').css('display', 'none');
+            });
+    }
+
+    openDetailform = function (id) {
+        $('#modalWindow').load('@Url.Action("Details", "Client")/' + id);
+        return false;
+    }
+</script>

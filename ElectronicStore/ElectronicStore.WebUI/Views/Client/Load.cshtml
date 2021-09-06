@@ -1,0 +1,16 @@
+﻿@model PagedList.IPagedList<ElectronicStore.WebUI.Models.ClientIndexView>
+@using PagedList.Mvc;
+
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@foreach (var m in Model)
+{
+    <div class="item">
+        <h3>@m.FirstName<br>@m.LastName</h3>
+        <h6><a href="#" onclick="return openDetailform(@m.ClientId)">Detail</a></h6>
+    </div>
+
+}
+
+Страница @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) из @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("Load", new { page }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions() { HttpMethod = "GET", UpdateTargetId = "window" }))
