@@ -82,20 +82,28 @@ namespace ElectronicStore.WebUI.Controllers
             }
         }
 
-        // POST: Admin/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public async Task<JsonResult> EditProductUpdate(ProductEditView item)
         {
-            try
+            if (ModelState.IsValid)
             {
-                // TODO: Add update logic here
+                try
+                {
+                    var config = new MapperConfiguration(cfg => cfg.CreateMap<ProductEditView, Product>());
+                    var map = new Mapper(config);
+                    var product = map.Map<ProductEditView, Product>(item);
 
-                return RedirectToAction("Index");
+                    await productRepo.Update(product);
+
+                    return Json(new { result = true});
+                }
+                catch (Exception ex)
+                {
+                    return Json(new { result = false, message = ex.Message });
+                }
             }
-            catch
-            {
-                return View();
-            }
+
+            return Json(new { result = true, message = "Model invalid" });
         }
 
         // GET: Admin/Delete/5
