@@ -1,0 +1,80 @@
+﻿@model PagedList.IPagedList<ElectronicStore.WebUI.Models.SellerIndexView>
+@using PagedList.Mvc
+
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+<style>
+    #form_container {
+        margin: 1% auto 1%;
+    }
+
+    #filterBtn {
+        margin: 1% auto 1%;
+    }
+
+    .form-inline {
+        margin: 1% auto;
+    }
+</style>
+
+<div class="mainBtnfilter">
+    <button id="filterBtn" type="button" class="btn btn-primary">Фильтр</button>
+</div>
+
+<div id="formContainer" hidden class="col-sm-8">
+    <form id="form-filter">
+        <div class="form-inline">
+            <div class="form-group-sm">
+                <label for="Name">Название: </label>
+                @Html.TextBox("Name", ViewBag.Filter.Name as string, new { @class = "form-control" })
+            </div>
+            <div class="form-group-sm">
+                <label for="Description">Описание: </label>
+                @Html.TextBox("Description", ViewBag.Filter.Description as string, new { @class = "form-control" })
+            </div>
+        </div>
+        <hr />
+        <div id="search_button" class="form-inline">
+            <div class="form-group row">
+                <div class="form-inline">
+                    <button id="searchBtn" type="submit" class="btn btn-primary">Search</button>
+                    <button id="cleanBtn" type="submit" class="btn btn-primary">Clean</button> 
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+
+
+@foreach (var m in Model)
+            {
+<div class="item">
+    <h3>@m.Name</h3>
+    @m.Description
+    <h4>@m.Birth</h4>
+</div>
+            }
+
+Страница @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) из @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("Load", new { page }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions() { HttpMethod = "GET", UpdateTargetId = "window" }))
+
+<script type="text/javascript">
+    $("#filterBtn").click(() => {
+        $("#formContainer").toggle();
+    })
+
+    $("#searchBtn").click((e) => {
+        e.preventDefault();
+        $("#formContainer").toggle();
+        loadDate($("#form-filter").serialize());
+    })
+
+    $("#cleanBtn").click((event) => {
+        event.preventDefault();
+        $("#form-filter :input").each(function () {
+            $(this).val("");
+        })
+    })
+</script>

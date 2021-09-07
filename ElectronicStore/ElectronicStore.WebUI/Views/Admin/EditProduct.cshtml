@@ -40,7 +40,7 @@
     </div>
 </div>
 
-<script>
+<script type="text/javascript">
     $('#modalEdit').ready(() => {
         showEdit();
     });
@@ -51,5 +51,17 @@
 
     hideEdit = function () {
         $('#modalEdit').modal('hide');
+    }
+
+    $("#editeBtn").click(updateInfo);
+
+    function updateInfo() {
+        if ($("form").validate()) {
+            $("form").on("submin", function (e) {
+                e.preventDefault();
+                $("form").serialize(),
+                    function
+            })
+        }
     }
 </script>
