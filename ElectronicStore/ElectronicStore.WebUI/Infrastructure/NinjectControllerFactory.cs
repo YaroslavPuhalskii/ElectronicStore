@@ -30,6 +30,8 @@ namespace ElectronicStore.WebUI.Infrastructure
         {
             ninjectKernel.Bind<IProductRepo>().To<ProductRepo>();
             ninjectKernel.Bind<IClientRepo>().To<ClientRepo>();
+            ninjectKernel.Bind<ISellerRepo>().To<SellerRepo>();
+            ninjectKernel.Bind<ISaleRepo>().To<SaleRepo>();
         }
     }
 }
