@@ -1,0 +1,32 @@
+﻿@model ElectronicStore.WebUI.Models.SaleIndexView
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Информация о продажах</h2>
+
+<link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+
+<div class="cont">
+    <div class="loader" id="loader">Loading...</div>
+</div>
+
+<div class="lines">
+    <div id="window"></div>
+    <div id="modalWindow"></div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(() => {
+        loadDate();
+    })
+
+    function loadDate(data) {
+        $('#loader').css('display', 'display');
+        $('#window').load('@Url.Action("Load", "Sale")/?' + data,
+            function () {
+                $('#loader').css('display', 'none');
+            });
+    }
+</script>

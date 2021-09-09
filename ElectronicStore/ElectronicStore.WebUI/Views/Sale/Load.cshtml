@@ -1,0 +1,107 @@
+﻿@model PagedList.IPagedList<ElectronicStore.WebUI.Models.SaleIndexView>
+@using PagedList.Mvc
+
+<link href="~/Content/bootstrap.css" rel="stylesheet">
+
+<style>
+    #formContainer {
+        margin: 1% auto 1%;
+    }
+
+    #filterBtn {
+        margin: 1% auto 1%;
+    }
+
+    .form-row {
+        margin: 1% auto;
+    }
+</style>
+
+<div class="mainBtnfilter">
+    <button id="filterBtn" type="button" class="btn btn-success">Фильтры</button>
+</div>
+
+<div id="formContainer" hidden>
+    <form id="form-filter">
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="ClientFirstName">First Name</label>
+                @Html.TextBox("ClientFirstName", ViewBag.Filter.ClientFirstName as string, new { @class = "form-control", @placeholder = "First Name" })
+            </div>
+            <div class="form-group col-md-6">
+                <label for="ClientLastName">Last Name</label>
+                @Html.TextBox("ClientLastName", ViewBag.Filter.ClientLastName as string, new { @class = "form-control", @placeholder = "Last Name"})
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="Product">Product</label>
+            @Html.TextBox("Product", ViewBag.Filter.Product as string, new { @class = "form-control", @placeholder = "Product's name"})
+        </div>
+        <div class="form-group">
+            <label for="Seller">Seller</label>
+            @Html.TextBox("Seller", ViewBag.Filter.Seller as string , new { @class = "form-control", @placeholder = "Seller's name"})
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="Price">Price</label>
+                @Html.TextBox("Price", ViewBag.Filter.Price as string, new { @class = "form-control", @placeholder = "Price"})
+            </div>
+            <div class="form-group col-md-6">
+                <label for="Date">Date</label>
+                @Html.TextBox("Date", ViewBag.Filter.Date as string, new { @class = "form-control", @placeholder = "Year"})
+            </div>
+        </div>
+        <hr />
+        <div id="search-btn" class="form-inline">
+            <button id="search" type="submit" class="btn btn-success">Search</button>
+            <button id="clean" type="submit" class="btn btn-danger">Clean</button>
+        </div>
+    </form>
+</div>
+
+<div id="idSaleTable">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Клиент</th>
+                    <th scope="col">Дата</th>
+                    <th scope="col">Стоимость</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var sale in Model)
+                {
+                <tr>
+                    <td>@sale.SaleId</td>
+                    <td>@sale.Client</td>
+                    <td>@sale.SaleDate</td>
+                    <td>@sale.Price</td>
+                </tr>
+                }
+            </tbody>
+        </table>
+</div>
+
+Страница @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) из @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("Load", new { page }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions() { HttpMethod = "GET", UpdateTargetId = "window" }))
+
+
+<script>
+    $("#filterBtn").click(() => {
+        $("#formContainer").toggle();
+    })
+
+    $("#search").click((event) => {
+        event.preventDefault();
+        $("#formContainer").toggle();
+        loadDate($("#form-filter").serialize());
+    })
+
+    $("#clean").click((event) => {
+        event.preventDefault();
+        $("#form-filter :input").each(function () {
+            $(this).val("");
+        })
+    })
+</script>
