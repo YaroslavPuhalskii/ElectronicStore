@@ -150,6 +150,7 @@
     <Compile Include="Infrastructure\NinjectControllerFactory.cs" />
     <Compile Include="Models\ClientViewModels.cs" />
     <Compile Include="Models\ProductViewModels.cs" />
+    <Compile Include="Models\SaleViewModels.cs" />
     <Compile Include="Models\SellerViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -203,10 +204,12 @@
     <Content Include="Views\Client\Details.cshtml" />
     <Content Include="Views\Seller\Index.cshtml" />
     <Content Include="Views\Seller\Load.cshtml" />
+    <Content Include="Views\Sale\Index.cshtml" />
+    <Content Include="Views\Sale\Load.cshtml" />
+    <Content Include="Views\Admin\CreateProduct.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Sale\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

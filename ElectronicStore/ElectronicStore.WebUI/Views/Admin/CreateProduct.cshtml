@@ -46,16 +46,26 @@
         showCreateForm();
     })
 
-    $("#saveForm").submit(function (event) {
+    $('form').on('submit', function (event) {
         event.preventDefault();
-        $.post('@Url.Action("CreateProduct", "Admin")', $("#saveForm").serialize(),
-            function (data, textStatus, jqXHR) {
-                if (data.result == true) {
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("CreateProduct", "Admin")',
+            data: $('form').serialize(),
+            success: function (result) {
+                if (result.result == true) {
                     hideCreateForm();
-                    openProductsform();
+                    function update() {
+                        $('#window').load('@Url.Action("LoadProducts", "Admin")');
+                    }
                 }
-            })
-    })
+                else {
+                    alert("Нельзя удалить продукт!");
+                }
+            }
+        });
+    });
 
     function hideCreateForm() {
         $("#modalCreate").modal('hide');

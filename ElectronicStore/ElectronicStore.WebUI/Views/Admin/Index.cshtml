@@ -27,10 +27,7 @@
 <script>
     /*Products*/
     function openProductsform() {
-        $("#loader").css('display', "display");
-        $('#window').load('@Url.Action("LoadProducts", "Admin")', function () {
-            $("#loader").css('display', "none");
-        });
+        $('#window').load('@Url.Action("LoadProducts", "Admin")');
     }
 
     openEditProductform = function (id) {
