@@ -47,4 +47,26 @@ namespace ElectronicStore.WebUI.Models
         public decimal Price { get; set; }
     }
 
+    public class ProductCreateView 
+    {
+        [HiddenInput(DisplayValue = false)]
+        public int ProductId { get; set; }
+        [Required]
+        [StringLength(50, MinimumLength = 3, ErrorMessage = "Имя должно от 3 букв до 50")]
+        [Display(Name = "Название продукта")]
+        public string Name { get; set; }
+        [Required]
+        [StringLength(400, MinimumLength = 3, ErrorMessage = "Имя должно от 3 букв до 400")]
+        [Display(Name = "Описание")]
+        public string Description { get; set; }
+        [Required]
+        [StringLength(50, MinimumLength = 3, ErrorMessage = "Имя должно от 3 букв до 50")]
+        [Display(Name = "Категория")]
+        public string Category { get; set; }
+        [Required]
+        [Display(Name = "Цена")]
+        [Range(1, int.MaxValue, ErrorMessage = "Недопустимая цена")]
+        public decimal Price { get; set; }
+    }
+
 }

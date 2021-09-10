@@ -4,9 +4,11 @@
 
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+<div id="createProductBtn">
+    <button id="createBtn" type="submit" class="btn btn-primary">Добавить</button>
+    <div id="createForm"></div>
+</div>
+
 <table class="table">
     <tr>
         <th>#</th>
@@ -23,7 +25,7 @@
             <td>@Html.DisplayFor(modelItem => item.Price)</td>
             <td>
                 <a href="#" onclick="return openEditProductform(@item.ProductId)">Edit</a> |
-                <a href="#" onclick="return openDeleteProductform(@item.ProductId)">Delete</a>
+                <a href="#" onclick="return DeleteProduct(@item.ProductId)">Delete</a>
             </td>
         </tr>
     }
@@ -31,3 +33,11 @@
 
 Страница @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) из @Model.PageCount
 @Html.PagedListPager(Model, page => Url.Action("LoadProducts", new { page }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions() { HttpMethod = "GET", UpdateTargetId = "window" }))
+
+<script>
+    function openAddForm() {
+        $("#createForm").load('@Url.Action("CreateProduct", "Admin")');
+    }
+
+    $("#createBtn").click(openAddForm);
+</script>

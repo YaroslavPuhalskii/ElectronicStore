@@ -14,6 +14,11 @@
     <li class="list-group-item"><a href="#" onclick="return openProductsform()">Sales</a></li>
 </ul>
 
+<div id="loader">
+    <h2>Идет загрузка данных...</h2>
+    <div class="load_spinner"></div>
+</div>
+
 <div class="lines">
     <div id="window"></div>
     <div id="modalWindow"></div>
@@ -21,13 +26,30 @@
 
 <script>
     /*Products*/
-    openProductsform = function () {
-        $('#window').load('@Url.Action("LoadProducts", "Admin")');
-        return false;
+    function openProductsform() {
+        $("#loader").css('display', "display");
+        $('#window').load('@Url.Action("LoadProducts", "Admin")', function () {
+            $("#loader").css('display', "none");
+        });
     }
 
     openEditProductform = function (id) {
         $('#modalWindow').load('@Url.Action("EditProduct", "Admin")/' + id);
-        return false;
+    }
+
+    function DeleteProduct(number) {
+
+        $.ajax({
+            url: '@Url.Action("DeleteProduct", "Admin")/' + number,
+            type: 'POST',
+            success: function (result) {
+                if (result.result == true) {
+                    openProductsform();
+                }
+                else {
+                    alert("Нельзя удалить продукт!");
+                }
+            }
+        });
     }
 </script>

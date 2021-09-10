@@ -1,0 +1,67 @@
+﻿@model ElectronicStore.WebUI.Models.ProductCreateView
+
+<div id="modalCreate" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="nameModalOperation" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal">x</button>
+                <h4 class="modal-title">Добавление продукта</h4>
+            </div>
+            <div class="modal-body">
+                <form id="saveForm">
+                    @using (Html.BeginForm())
+                    {
+                        <label id="serverError"></label>
+                        @Html.ValidationSummary(false)
+                        <div class="form-group">
+                            @Html.LabelFor(p => p.Name)
+                            @Html.TextBoxFor(p => p.Name, new { @class = "form-control", @type = "text", @placeholder = "Enter name" })
+                            @Html.ValidationMessageFor(p => p.Name)
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(p => p.Description)
+                            @Html.TextBoxFor(p => p.Description, new { @class = "form-control", @type = "text", @placeholder = "Enter name" })
+                            @Html.ValidationMessageFor(p => p.Description)
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(p => p.Category)
+                            @Html.TextBoxFor(p => p.Category, new { @class = "form-control", @type = "text", @placeholder = "Enter name" })
+                            @Html.ValidationMessageFor(p => p.Category)
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(p => p.Price)
+                            @Html.TextBoxFor(p => p.Price, new { @class = "form-control", @name = "Price", @placeholder = "Enter name" })
+                            @Html.ValidationMessageFor(p => p.Price)
+                        </div>
+                        <input id="createBtn" type="submit" class="btn btn-success" value="Добавить" />
+                    }
+                </form>              
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(() => {
+        showCreateForm();
+    })
+
+    $("#saveForm").submit(function (event) {
+        event.preventDefault();
+        $.post('@Url.Action("CreateProduct", "Admin")', $("#saveForm").serialize(),
+            function (data, textStatus, jqXHR) {
+                if (data.result == true) {
+                    hideCreateForm();
+                    openProductsform();
+                }
+            })
+    })
+
+    function hideCreateForm() {
+        $("#modalCreate").modal('hide');
+    }
+
+    function showCreateForm() {
+        $("#modalCreate").modal();
+    }
+</script>

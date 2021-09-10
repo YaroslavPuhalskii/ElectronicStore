@@ -43,25 +43,27 @@ namespace ElectronicStore.WebUI.Controllers
             return PartialView(products.ToPagedList(pageNumber, pageSize));
         }
 
-        // GET: Admin/Create
-        public ActionResult Create()
+        public PartialViewResult CreateProduct()
         {
-            return View();
+            return PartialView();
         }
 
-        // POST: Admin/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public async Task<JsonResult> CreateProduct(ProductCreateView item)
         {
             try
             {
-                // TODO: Add insert logic here
+                var config = new MapperConfiguration(cfg => cfg.CreateMap<ProductCreateView, Product>());
+                var map = new Mapper(config);
+                var product = map.Map<ProductCreateView, Product>(item);
 
-                return RedirectToAction("Index");
+                await productRepo.Insert(product);
+
+                return Json(new { result = true});
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                return Json(new { result = false, message = ex.Message});
             }
         }
 
@@ -103,13 +105,20 @@ namespace ElectronicStore.WebUI.Controllers
                 }
             }
 
-            return Json(new { result = true, message = "Model invalid" });
+            return Json(new { result = false, message = "Model invalid" });
         }
 
-        // GET: Admin/Delete/5
-        public ActionResult Delete(int id)
+        [HttpPost]
+        public async Task<JsonResult> DeleteProduct(int id)
         {
-            return View();
+            if (id > 0)
+            {
+                await productRepo.Remove(id);
+
+                return Json(new { result = true});
+            }
+
+            return Json(new { result = false, message = "Model invalid" });
         }
 
         // POST: Admin/Delete/5
