@@ -19,16 +19,18 @@ namespace ElectronicStore.WebUI.Controllers
         private IProductRepo productRepo = new ProductRepo();
         private ISaleRepo _saleRepo = new SaleRepo();
         private ISellerRepo _sellerRepo = new SellerRepo();
-        
+
         public AdminController()
         {
 
         }
-        // GET: Admin
+
         public ViewResult Index()
         {
             return View();
         }
+
+        #region Для продуктов
 
         [HttpGet]
         public async Task<PartialViewResult> LoadProducts(int? page)
@@ -59,15 +61,14 @@ namespace ElectronicStore.WebUI.Controllers
 
                 await productRepo.Insert(product);
 
-                return Json(new { result = true});
+                return Json(new { result = true });
             }
             catch (Exception ex)
             {
-                return Json(new { result = false, message = ex.Message});
+                return Json(new { result = false, message = ex.Message });
             }
         }
 
-        // GET: Admin/Edit/5
         public async Task<PartialViewResult> EditProduct(int id)
         {
             try
@@ -97,7 +98,7 @@ namespace ElectronicStore.WebUI.Controllers
 
                     await productRepo.Update(product);
 
-                    return Json(new { result = true});
+                    return Json(new { result = true });
                 }
                 catch (Exception ex)
                 {
@@ -115,26 +116,75 @@ namespace ElectronicStore.WebUI.Controllers
             {
                 await productRepo.Remove(id);
 
-                return Json(new { result = true});
+                return Json(new { result = true });
             }
 
             return Json(new { result = false, message = "Model invalid" });
         }
+        #endregion
 
-        // POST: Admin/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        #region Для Клиентов
+        public PartialViewResult LoadClient()
         {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            return PartialView();
         }
+
+        public PartialViewResult EditClient(int id)
+        {
+            return PartialView();
+        }
+
+        public JsonResult EditClient(ClientEditeView item)
+        {
+            return Json(new { result = true});
+        }
+
+        public PartialViewResult CreateClient()
+        {
+            return PartialView();
+        }
+
+        public JsonResult CreateClient(ClientCreateView item)
+        {
+            return Json(new { result = true });
+        }
+
+        public JsonResult DeleteClient(int id)
+        {
+            return Json(new { result = true });
+        }
+        #endregion
+
+        #region Для Продавцов
+        public PartialViewResult Loadseller()
+        {
+            return PartialView();
+        }
+
+        public PartialViewResult EditSeller(int id)
+        {
+            return PartialView();
+        }
+
+        public JsonResult EditSeller(ClientEditeView item)
+        {
+            return Json(new { result = true });
+        }
+
+        public PartialViewResult CreateSeller()
+        {
+            return PartialView();
+        }
+
+        public JsonResult CreateSeller(ClientCreateView item)
+        {
+            return Json(new { result = true });
+        }
+
+        public JsonResult DeleteSeller(int id)
+        {
+            return Json(new { result = true });
+        }
+        #endregion
     }
 }
