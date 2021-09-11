@@ -25,7 +25,7 @@ namespace ElectronicStore.WebUI.Models
         public DateTime Birth { get; set; }
     }
 
-    public class ClientEditeView
+    public class ClientEditView
     {
         [HiddenInput(DisplayValue = false)]
         public int ClientId { get; set; }

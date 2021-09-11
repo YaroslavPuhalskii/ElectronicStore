@@ -18,7 +18,7 @@ namespace ElectronicStore.WebUI.Controllers
         private IClientRepo clientRepo = new ClientRepo();
         private IProductRepo productRepo = new ProductRepo();
         private ISaleRepo _saleRepo = new SaleRepo();
-        private ISellerRepo _sellerRepo = new SellerRepo();
+        private ISellerRepo sellerRepo = new SellerRepo();
 
         public AdminController()
         {
@@ -124,19 +124,51 @@ namespace ElectronicStore.WebUI.Controllers
         #endregion
 
         #region Для Клиентов
-        public PartialViewResult LoadClient()
+        public async Task<PartialViewResult> LoadClient(int? page)
         {
-            return PartialView();
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<Client, ClientIndexView>());
+            var map = new Mapper(config);
+            var clients = map.Map<List<ClientIndexView>>(await clientRepo.GetItems());
+
+            int pageSize = 3;
+            int pageNumber = page ?? 1;
+
+            return PartialView(clients.ToPagedList(pageNumber, pageSize));
         }
 
-        public PartialViewResult EditClient(int id)
+        public async Task<PartialViewResult> EditClient(int id)
         {
-            return PartialView();
+            try
+            {
+                var config = new MapperConfiguration(cfg => cfg.CreateMap<Client, ClientEditView>());
+                var map = new Mapper(config);
+                var client = map.Map<Client, ClientEditView>(await clientRepo.GetById(id));
+
+                return PartialView(client);
+
+            }
+            catch
+            {
+                return PartialView("~/Views/Shared/Error.cshtml");
+            }
         }
 
-        public JsonResult EditClient(ClientEditeView item)
+        public async Task<JsonResult> EditClient(ClientEditView item)
         {
-            return Json(new { result = true});
+            try
+            {
+                var config = new MapperConfiguration(cfg => cfg.CreateMap<ClientEditView, Client>());
+                var map = new Mapper(config);
+                var client = map.Map<ClientEditView, Client>(item);
+
+                await clientRepo.Update(client);
+
+                return Json(new { result = true });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { result = false, message = ex.Message });
+            };
         }
 
         public PartialViewResult CreateClient()
@@ -144,31 +176,82 @@ namespace ElectronicStore.WebUI.Controllers
             return PartialView();
         }
 
-        public JsonResult CreateClient(ClientCreateView item)
+        public async Task<JsonResult> CreateClient(ClientCreateView item)
         {
-            return Json(new { result = true });
+            try
+            {
+                var config = new MapperConfiguration(cfg => cfg.CreateMap<ClientCreateView, Client>());
+                var map = new Mapper(config);
+                var client = map.Map<ClientCreateView, Client>(item);
+
+                await clientRepo.Insert(client);
+
+                return Json(new { result = true});
+            }
+            catch (Exception ex)
+            {
+                return Json(new { result = false, message = ex.Message });
+            }
         }
 
-        public JsonResult DeleteClient(int id)
+        public async Task<JsonResult> DeleteClient(int id)
         {
-            return Json(new { result = true });
+            if (id > 0)
+            {
+                await clientRepo.Remove(id);
+
+                return Json(new { result = true });
+            }
+
+            return Json(new { result = false, message = "Model is invalid" });
         }
         #endregion
 
         #region Для Продавцов
-        public PartialViewResult Loadseller()
+        public async Task<PartialViewResult> LoadSeller(int? page)
         {
-            return PartialView();
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<Seller, SellerIndexView>());
+            var map = new Mapper(config);
+            var sellers = map.Map<List<SellerIndexView>>(await sellerRepo.GetItems());
+
+            int pageSize = 3;
+            int pageNumber = page ?? 1;
+
+            return PartialView(sellers.ToPagedList(pageNumber, pageSize));
         }
 
-        public PartialViewResult EditSeller(int id)
+        public async Task<PartialViewResult> EditSeller(int id)
         {
-            return PartialView();
+            try
+            {
+                var config = new MapperConfiguration(cfg => cfg.CreateMap<Seller, SellerEditView>());
+                var map = new Mapper(config);
+                var seller = map.Map<Seller, SellerEditView>(await sellerRepo.GetById(id));
+
+                return PartialView(seller);
+            }
+            catch
+            {
+                return PartialView("~/Views/Shared/Error.cshtml");
+            }
         }
 
-        public JsonResult EditSeller(ClientEditeView item)
+        public async Task<JsonResult> EditSeller(SellerEditView item)
         {
-            return Json(new { result = true });
+            try
+            {
+                var config = new MapperConfiguration(cfg => cfg.CreateMap<SellerEditView, Seller>());
+                var map = new Mapper(config);
+                var seller = map.Map<SellerEditView, Seller>(item);
+
+                await sellerRepo.Update(seller);
+
+                return Json( new { result = true});
+            }
+            catch (Exception ex)
+            {
+                return Json( new { result = false, message = ex.Message});
+            }
         }
 
         public PartialViewResult CreateSeller()
@@ -176,14 +259,34 @@ namespace ElectronicStore.WebUI.Controllers
             return PartialView();
         }
 
-        public JsonResult CreateSeller(ClientCreateView item)
+        public async Task<JsonResult> CreateSeller(SellerCreateView item)
         {
-            return Json(new { result = true });
+            try
+            {
+                var config = new MapperConfiguration(cfg => cfg.CreateMap<SellerCreateView, Seller>());
+                var map = new Mapper(config);
+                var seller = map.Map<SellerCreateView, Seller>(item);
+
+                await sellerRepo.Insert(seller);
+
+                return Json( new { result = true});
+            }
+            catch (Exception ex)
+            {
+                return Json( new { result = false, message = ex.Message});
+            }
         }
 
         public JsonResult DeleteSeller(int id)
         {
-            return Json(new { result = true });
+            if (id > 0)
+            {
+                sellerRepo.Remove(id);
+
+                return Json(new { result = true});
+            }
+
+            return Json(new { result = false, message = "Model is invalid"});
         }
         #endregion
     }
