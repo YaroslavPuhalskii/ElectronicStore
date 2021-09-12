@@ -207,6 +207,10 @@
     <Content Include="Views\Sale\Index.cshtml" />
     <Content Include="Views\Sale\Load.cshtml" />
     <Content Include="Views\Admin\CreateProduct.cshtml" />
+    <Content Include="Views\Admin\LoadSeller.cshtml" />
+    <Content Include="Views\Admin\LoadClient.cshtml" />
+    <Content Include="Views\Admin\CreateSeller.cshtml" />
+    <Content Include="Views\Admin\CreateClient.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

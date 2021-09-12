@@ -175,7 +175,7 @@ namespace ElectronicStore.WebUI.Controllers
         {
             return PartialView();
         }
-
+        [HttpPost]
         public async Task<JsonResult> CreateClient(ClientCreateView item)
         {
             try
@@ -259,6 +259,7 @@ namespace ElectronicStore.WebUI.Controllers
             return PartialView();
         }
 
+        [HttpPost]
         public async Task<JsonResult> CreateSeller(SellerCreateView item)
         {
             try

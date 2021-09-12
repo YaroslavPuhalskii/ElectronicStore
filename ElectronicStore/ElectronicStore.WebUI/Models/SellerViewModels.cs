@@ -54,10 +54,10 @@ namespace ElectronicStore.WebUI.Models
         [Required]
         [StringLength(50, MinimumLength = 5, ErrorMessage = "Почта должна от 5 букв до 50")]
         [Display(Name = "Описание")]
-        public string Description { get; set; }
+        public string Decription { get; set; }
         [Required(ErrorMessage = "Введите дату основания")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
-        public DateTime Bith { get; set; }
+        public DateTime Birth { get; set; }
     }
 }

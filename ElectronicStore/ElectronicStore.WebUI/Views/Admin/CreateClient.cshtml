@@ -1,0 +1,82 @@
+﻿@model ElectronicStore.WebUI.Models.ClientCreateView
+
+<div id="modalCreate" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="nameModalOperation" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal">x</button>
+                <h4 class="modal-title">Добавление клиента</h4>
+            </div>
+            <div class="modal-body">
+                <form id="saveForm">
+                    @using (Html.BeginForm())
+                    {
+                        <label id="serverError"></label>
+                        @Html.ValidationSummary(false)
+                        <div class="form-group">
+                            @Html.LabelFor(p => p.FirstName)
+                            @Html.TextBoxFor(p => p.FirstName, new { @class = "form-control", @type = "text", @placeholder = "Enter first name" })
+                            @Html.ValidationMessageFor(p => p.FirstName)
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(p => p.LastName)
+                            @Html.TextBoxFor(p => p.LastName, new { @class = "form-control", @type = "text", @placeholder = "Enter last name" })
+                            @Html.ValidationMessageFor(p => p.LastName)
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(p => p.Address)
+                            @Html.TextBoxFor(p => p.Address, new { @class = "form-control", @type = "text", @placeholder = "Enter address" })
+                            @Html.ValidationMessageFor(p => p.Address)
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(p => p.Email)
+                            @Html.TextBoxFor(p => p.Email, new { @class = "form-control", @type = "text", @placeholder = "Enter email" })
+                            @Html.ValidationMessageFor(p => p.Email)
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(p => p.Birth)
+                            @Html.TextBoxFor(p => p.Birth, new { @class = "form-control", @type = "text", @placeholder = "Enter date" })
+                            @Html.ValidationMessageFor(p => p.Birth)
+                        </div>
+                        <input id="createBtn" type="submit" class="btn btn-success" value="Добавить" />
+                    }
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(() => {
+        showClientCreateform();
+    });
+
+    $('form').on("submit", function (event) {
+        event.preventDefault();
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("CreateClient", "Admin")',
+            data: $('form').serialize(),
+            success: function (result) {
+                if (result.result) {
+                    hideClientCreateform();
+                    function update() {
+                        $("#window").load('@Url.Action("LoadClient", "Admin")');
+                    }
+                }
+                else {
+                    alert("Не удалось удалить клиента!");
+                }
+            }
+        });
+    })
+
+    function showClientCreateform() {
+        $("#modalCreate").modal();
+    }
+
+    function hideClientCreateform() {
+        $("#modalCreate").modal('hide');
+    }
+</script>

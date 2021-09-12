@@ -9,14 +9,13 @@
 
 <ul class="list-group list-group-horizontal">
     <li class="list-group-item"><a href="#" onclick="return openProductsform()">Products</a></li>
-    <li class="list-group-item"><a href="#" onclick="return openProductsform()">Clients</a></li>
-    <li class="list-group-item"><a href="#" onclick="return openProductsform()">Sellers</a></li>
+    <li class="list-group-item"><a href="#" onclick="return openClientform()">Clients</a></li>
+    <li class="list-group-item"><a href="#" onclick="return openSellerform()">Sellers</a></li>
     <li class="list-group-item"><a href="#" onclick="return openProductsform()">Sales</a></li>
 </ul>
 
-<div id="loader">
-    <h2>Идет загрузка данных...</h2>
-    <div class="load_spinner"></div>
+<div class="cont">
+    <div class="loader" id="loader">Loading...</div>
 </div>
 
 <div class="lines">
@@ -27,7 +26,11 @@
 <script>
     /*Products*/
     function openProductsform() {
-        $('#window').load('@Url.Action("LoadProducts", "Admin")');
+        $('#loader').css('display', 'display');
+        $('#window').load('@Url.Action("LoadProducts", "Admin")',
+            function () {
+                $('#loader').css('display', 'none');
+            });
     }
 
     openEditProductform = function (id) {
@@ -49,4 +52,54 @@
             }
         });
     }
+
+    /*Seller*/
+    function openSellerform() {
+        $('#loader').css('display', 'display');
+        $('#window').load('@Url.Action("LoadSeller", "Admin")',
+            function () {
+                $('#loader').css('display', 'none');
+            });
+    }
+
+    function DeleteSeller(id) {
+        $.ajax({
+            url: '@Url.Action("DeleteSeller", "Admin")/' + id,
+            type: 'POST',
+            success: function (result) {
+                if (result.result) {
+                    openSellerform();
+                }
+                else {
+                    alert("Нельзя удалить продавца!");
+                }
+            }
+        });
+    }
+
+    /*Client*/
+    function openClientform() {
+        $('#loader').css('display', 'display');
+        $('#window').load('@Url.Action("LoadClient", "Admin")',
+            function () {
+                $('#loader').css('display', 'none');
+            });
+    }
+
+    function DeleteClient(id) {
+
+        $.ajax({
+            url: '@Url.Action("DeleteClient", "Admin")/' + id,
+            type: 'POST',
+            success: function (result) {
+                if (result.result) {
+                    openClientform();
+                }
+                else {
+                    alert("Нельзя удалить клиента!");
+                }
+            }
+        });
+    }
+
 </script>

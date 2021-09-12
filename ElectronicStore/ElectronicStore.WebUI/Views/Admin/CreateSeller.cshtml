@@ -1,0 +1,72 @@
+﻿@model ElectronicStore.WebUI.Models.SellerCreateView
+
+<div id="modalCreate" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="nameModalOperation" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal">x</button>
+                <h4 class="modal-title">Добавление продавца</h4>
+            </div>
+            <div class="modal-body">
+                <form id="saveForm">
+                    @using (Html.BeginForm())
+                    {
+                        <label id="serverError"></label>
+                        @Html.ValidationSummary(false)
+                        <div class="form-group">
+                            @Html.LabelFor(p => p.Name)
+                            @Html.TextBoxFor(p => p.Name, new { @class = "form-control", @type = "text", @placeholder = "Enter name" })
+                            @Html.ValidationMessageFor(p => p.Name)
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(p => p.Decription)
+                            @Html.TextBoxFor(p => p.Decription, new { @class = "form-control", @type = "text", @placeholder = "Enter description" })
+                            @Html.ValidationMessageFor(p => p.Decription)
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(p => p.Birth)
+                            @Html.TextBoxFor(p => p.Birth, new { @class = "form-control", @type = "text", @placeholder = "Enter date" })
+                            @Html.ValidationMessageFor(p => p.Birth)
+                        </div>
+                        <input id="createBtn" type="submit" class="btn btn-success" value="Добавить" />
+                    }
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(() => {
+        showCreateform();
+    });
+
+    $('form').on('submit', function (event) {
+        event.preventDefault();
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("CreateSeller", "Admin")',
+            data: $('form').serialize(),
+            success: function (result) {
+                if (result.result) {
+                    hideCSeller();
+                    function update() {
+                        $('#window').load('@Url.Action("CreateSeller", "Admin")');
+                    }
+                }
+                else {
+                    alert("Добавить продавца нельзя!");
+                }
+            }
+        });
+    })
+
+    function showCreateform() {
+        $("#modalCreate").modal();
+    }
+
+    function hideCSeller() {
+        $("#modalCreate").modal('hide');
+    }
+</script>
