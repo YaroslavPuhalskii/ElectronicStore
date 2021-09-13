@@ -11,7 +11,7 @@
     <li class="list-group-item"><a href="#" onclick="return openProductsform()">Products</a></li>
     <li class="list-group-item"><a href="#" onclick="return openClientform()">Clients</a></li>
     <li class="list-group-item"><a href="#" onclick="return openSellerform()">Sellers</a></li>
-    <li class="list-group-item"><a href="#" onclick="return openProductsform()">Sales</a></li>
+    <li class="list-group-item"><a href="#" onclick="return openSaleform()">Sales</a></li>
 </ul>
 
 <div class="cont">
@@ -108,6 +108,34 @@
 
     openEditClient = function (id) {
         $("#modalWindow").load('@Url.Action("EditClient", "Admin")/' + id);
+    }
+
+    /*Sale*/
+    function openSaleform() {
+        $('#loader').css('display', 'display');
+        $('#window').load('@Url.Action("LoadSales", "Admin")',
+            function () {
+                $('#loader').css('display', 'none');
+            });
+    }
+
+    function DeleteSale(id) {
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("DeleteSale", "Admin")/' + id,
+            success: function (result) {
+                if (result.result) {
+                    openSaleform();
+                }
+                else {
+                    alert("Невозможно удалить продажу");
+                }
+            }
+        });
+    }
+
+    function openEditSaleform(id) {
+        $("#modalWindow").load('@Url.Action("EditeSale", "Admin")/' + id);
     }
 
 </script>

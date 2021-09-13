@@ -213,6 +213,9 @@
     <Content Include="Views\Admin\CreateClient.cshtml" />
     <Content Include="Views\Admin\EditClient.cshtml" />
     <Content Include="Views\Admin\EditSeller.cshtml" />
+    <Content Include="Views\Admin\LoadSales.cshtml" />
+    <Content Include="Views\Admin\CreateSale.cshtml" />
+    <Content Include="Views\Admin\EditSale.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

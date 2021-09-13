@@ -1,0 +1,82 @@
+﻿@model ElectronicStore.WebUI.Models.SaleCreateView
+
+<div id="modalCreate" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="nameModalOperation" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal">x</button>
+                <h4 class="modal-title">Добавление продажи</h4>
+            </div>
+            <div class="modal-body">
+                <form id="saveForm">
+                    @using (Html.BeginForm())
+                    {
+                        <label id="serverError"></label>
+                        @Html.ValidationSummary(false)
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.ClientId)
+                            @Html.DropDownListFor(model => model.ClientId, ViewBag.Clients as SelectList, new { @class = "form-control", @name = "Clients" })
+                            @Html.ValidationMessageFor(model => model.ClientId)
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.SellerId)
+                            @Html.DropDownListFor(model => model.SellerId, ViewBag.Sellers as SelectList, new { @class = "form-control", @name = "Sellers" })
+                            @Html.ValidationMessageFor(model => model.SellerId)
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.ProductId)
+                            @Html.DropDownListFor(model => model.ProductId, ViewBag.Products as SelectList, new { @class = "form-control", @name = "Products" })
+                            @Html.ValidationMessageFor(model => model.ProductId)
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.SaleDate)
+                            @Html.TextBoxFor(model => model.SaleDate, new { @class = "form-control", @type = "text", @placeholder = "Enter date" })
+                            @Html.ValidationMessageFor(model => model.SaleDate)
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Price)
+                            @Html.TextBoxFor(model => model.Price, new { @class = "form-control", @type = "text", @placeholder = "Enter price" })
+                            @Html.ValidationMessageFor(model => model.Price)
+                        </div>
+                        <input id="createBtn" type="submit" class="btn btn-success" value="Добавить" />
+                    }
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(() => {
+        showCreateSale();
+    });
+
+    $('form').on('submit', function (event) {
+        event.preventDefault();
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("CreateSale", "Admin")',
+            data: $('form').serialize(),
+            success: function (result) {
+                if (result.result) {
+                    hideCreateSale();
+                    function update() {
+                        $('#window').load('@Url.Action("LoadSales", "Admin")');
+                    }
+                }
+                else {
+                    alert("Невозможно добавить продажу");
+                }
+            }
+        });
+    })
+
+    showCreateSale = function () {
+        $("#modalCreate").modal();
+    }
+
+    hideCreateSale = function () {
+        $("#modalCreate").modal('hide');
+    }
+</script>

@@ -37,4 +37,62 @@ namespace ElectronicStore.WebUI.Models
         [Display(Name = "Стоимость")]
         public decimal Price { get; set; }
     }
+
+    public class SaleCreateView
+    {
+        [HiddenInput(DisplayValue = false)]
+        public int SaleId { get; set; }
+
+        [Display(Name = "Покупатель")]
+        [Required(ErrorMessage = "Выберите покупателя")]
+        public int ClientId { get; set; }
+
+        [Required(ErrorMessage = "Продукт")]
+        [Display(Name = "Название продукта")]
+        public int ProductId { get; set; }
+
+        [Display(Name = "Продавец")]
+        [Required(ErrorMessage = "Выберите продовца")]
+        public int SellerId { get; set; }
+
+        [Required(ErrorMessage = "Дату")]
+        [DataType(DataType.Date)]
+        [Display(Name = "Дата продажи")]
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
+        public DateTime SaleDate { get; set; }
+
+        [Required(ErrorMessage = "Стоимость")]
+        [Display(Name = "Стоимость")]
+        [Range(1, int.MaxValue, ErrorMessage = "Недопустимая цена")]
+        public decimal Price { get; set; }
+    }
+
+    public class SaleEditView
+    {
+        [HiddenInput(DisplayValue = false)]
+        public int SaleId { get; set; }
+
+        [Display(Name = "Покупатель")]
+        [Required(ErrorMessage = "Выберите покупателя")]
+        public int ClientId { get; set; }
+
+        [Required(ErrorMessage = "Продукт")]
+        [Display(Name = "Название продукта")]
+        public int ProductId { get; set; }
+
+        [Display(Name = "Продавец")]
+        [Required(ErrorMessage = "Выберите продовца")]
+        public int SellerId { get; set; }
+
+        [Required(ErrorMessage = "Дату")]
+        [DataType(DataType.Date)]
+        [Display(Name = "Дата продажи")]
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
+        public DateTime SaleDate { get; set; }
+
+        [Required(ErrorMessage = "Стоимость")]
+        [Display(Name = "Стоимость")]
+        [Range(1, int.MaxValue, ErrorMessage = "Недопустимая цена")]
+        public decimal Price { get; set; }
+    }
 }

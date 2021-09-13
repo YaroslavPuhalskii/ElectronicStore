@@ -6,9 +6,7 @@ using ElectronicStore.WebUI.Models;
 using PagedList;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 
 namespace ElectronicStore.WebUI.Controllers
@@ -17,7 +15,7 @@ namespace ElectronicStore.WebUI.Controllers
     {
         private IClientRepo clientRepo = new ClientRepo();
         private IProductRepo productRepo = new ProductRepo();
-        private ISaleRepo _saleRepo = new SaleRepo();
+        private ISaleRepo saleRepo = new SaleRepo();
         private ISellerRepo sellerRepo = new SellerRepo();
 
         public AdminController()
@@ -287,6 +285,98 @@ namespace ElectronicStore.WebUI.Controllers
             }
 
             return Json(new { result = false, message = "Model is invalid"});
+        }
+        #endregion
+
+        #region Для Продаж
+        public async Task<PartialViewResult> LoadSales(int? page)
+        {
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<Sale, SaleIndexView>()
+            .ForMember("Client", opt => opt.MapFrom(s => s.Client.FirstName))
+            .ForMember("Seller", opt => opt.MapFrom(s => s.Seller.Name))
+            .ForMember("Product", opt => opt.MapFrom(s => s.Product.Name)));
+            var map = new Mapper(config);
+            var sales = map.Map<List<SaleIndexView>>(await saleRepo.GetItems());
+
+            int pageSize = 3;
+            int pageNumber = page ?? 1;
+
+            return PartialView(sales.ToPagedList(pageNumber, pageSize));
+        }
+
+        public async Task<PartialViewResult> CreateSale()
+        {
+            ViewBag.Clients = new SelectList(await clientRepo.GetItems(), "ClientId", "FirstName");
+            ViewBag.Products = new SelectList(await productRepo.GetItems(), "ProductId", "Name");
+            ViewBag.Sellers = new SelectList(await sellerRepo.GetItems(), "SellerId", "Name");
+
+            return PartialView();
+        }
+        [HttpPost]
+        public async Task<JsonResult> CreateSale(SaleCreateView item)
+        {
+            try
+            {
+                var config = new MapperConfiguration(cfg => cfg.CreateMap<SaleCreateView, Sale>());
+                var map = new Mapper(config);
+                var sale = map.Map<SaleCreateView, Sale>(item);
+
+                await saleRepo.Insert(sale);
+
+                return Json(new { result = true});
+            }
+            catch (Exception ex)
+            {
+                return Json(new { result = false, message = ex.Message});
+            }
+        }
+
+        public async Task<PartialViewResult> EditSale(int id)
+        {
+            try
+            {
+                var config = new MapperConfiguration(cfg => cfg.CreateMap<Sale, SaleEditView>());
+                var map = new Mapper(config);
+                var sale = map.Map<Sale, SaleEditView>(await saleRepo.GetById(id));
+
+                return PartialView(sale);
+            }
+            catch
+            {
+                return PartialView("~/Views/Shared/Error.cshtml");
+            }
+        }
+        [HttpPost]
+        public async Task<JsonResult> EditSale(SaleEditView item)
+        {
+            try
+            {
+                var config = new MapperConfiguration(cfg => cfg.CreateMap<SaleEditView, Sale>());
+                var map = new Mapper(config);
+                var sale = map.Map<SaleEditView, Sale>(item);
+
+                await saleRepo.Update(sale);
+
+                return Json(new { result = true});
+            }
+            catch (Exception ex)
+            {
+                return Json(new { result = false, message = ex.Message});
+            }
+        }
+
+        public async Task<JsonResult> DeleteSale(int id)
+        {
+            try
+            {
+                await saleRepo.Remove(id);
+
+                return Json(new { result = true });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { result = true, message = ex.Message});
+            }
         }
         #endregion
     }

@@ -1,0 +1,48 @@
+﻿@model PagedList.IPagedList<ElectronicStore.WebUI.Models.SaleIndexView>
+@using PagedList.Mvc;
+
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+<div id="createSaleBtn">
+    <button id="createBtn" type="submit" class="btn btn-primary">Добавить</button>
+    <div id="createForm"></div>
+</div>
+
+<table class="table">
+    <tr>
+        <th>#</th>
+        <th>Клиент</th>
+        <th>Продавец</th>
+        <th>Товар</th>
+        <th>Цена</th>
+        <th>Дата</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.SaleId</td>
+            <td>@item.Client</td>
+            <td>@item.Seller</td>
+            <td>@item.Product</td>
+            <td>@item.Price</td>
+            <td>@item.SaleDate</td>
+            <td>
+                <a href="#" onclick="return openEditSaleform(@item.SaleId)">Edit</a> |
+                <a href="#" onclick="return DeleteSale(@item.SaleId)">Delete</a>
+            </td>
+        </tr>
+    }
+</table>
+
+
+Страница @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) из @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("LoadSales", new { page }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions() { HttpMethod = "GET", UpdateTargetId = "window" }))
+
+<script type="text/javascript">
+    function openAddSaleform() {
+        $("#createForm").load('@Url.Action("CreateSale", "Admin")');
+    }
+
+    $("#createBtn").click(openAddSaleform);
+</script>
