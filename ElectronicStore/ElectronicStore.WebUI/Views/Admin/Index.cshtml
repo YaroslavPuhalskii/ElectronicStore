@@ -77,6 +77,10 @@
         });
     }
 
+    openEditSellerform = function (id) {
+        $('#modalWindow').load('@Url.Action("EditSeller", "Admin")/' + id);
+    }
+
     /*Client*/
     function openClientform() {
         $('#loader').css('display', 'display');
@@ -100,6 +104,10 @@
                 }
             }
         });
+    }
+
+    openEditClient = function (id) {
+        $("#modalWindow").load('@Url.Action("EditClient", "Admin")/' + id);
     }
 
 </script>

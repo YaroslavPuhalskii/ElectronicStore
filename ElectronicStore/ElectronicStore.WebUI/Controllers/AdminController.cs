@@ -32,7 +32,6 @@ namespace ElectronicStore.WebUI.Controllers
 
         #region Для продуктов
 
-        [HttpGet]
         public async Task<PartialViewResult> LoadProducts(int? page)
         {
             var config = new MapperConfiguration(cfg => cfg.CreateMap<Product, ProductIndexView>());
@@ -86,7 +85,7 @@ namespace ElectronicStore.WebUI.Controllers
         }
 
         [HttpPost]
-        public async Task<JsonResult> EditProductUpdate(ProductEditView item)
+        public async Task<JsonResult> EditProduct(ProductEditView item)
         {
             if (ModelState.IsValid)
             {
@@ -152,7 +151,7 @@ namespace ElectronicStore.WebUI.Controllers
                 return PartialView("~/Views/Shared/Error.cshtml");
             }
         }
-
+        [HttpPost]
         public async Task<JsonResult> EditClient(ClientEditView item)
         {
             try
@@ -235,7 +234,7 @@ namespace ElectronicStore.WebUI.Controllers
                 return PartialView("~/Views/Shared/Error.cshtml");
             }
         }
-
+        [HttpPost]
         public async Task<JsonResult> EditSeller(SellerEditView item)
         {
             try

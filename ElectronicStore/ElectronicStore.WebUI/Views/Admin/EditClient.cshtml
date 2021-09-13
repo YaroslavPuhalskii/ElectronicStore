@@ -1,0 +1,82 @@
+﻿@model ElectronicStore.WebUI.Models.ClientEditView
+
+
+<div id="modalEdit" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="nameModalOperation" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal">x</button>
+                <h4 class="modal-title">Информация о модели</h4>
+            </div>
+            <div class="modal-body">
+                <form id="saveForm">
+                    @using (Html.BeginForm())
+                    {
+                        <label id="serverError"></label>
+                        @Html.ValidationSummary(false)
+                        @Html.HiddenFor(m => m.ClientId)
+                        <div class="form-group" id="editeForm">
+                            @Html.LabelFor(m => m.FirstName)
+                            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", @type = "text", @placeholder = "Enter first name" })
+                            @Html.ValidationMessageFor(model => model.FirstName)
+                        </div>
+                        <div class="form-group" id="editeForm">
+                            @Html.LabelFor(m => m.LastName)
+                            @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", @type = "text", @placeholder = "Enter last name" })
+                            @Html.ValidationMessageFor(model => model.LastName)
+                        </div>
+                        <div class="form-group" id="editeForm">
+                            @Html.LabelFor(m => m.Address)
+                            @Html.TextBoxFor(m => m.Address, new { @class = "form-control", @type = "text", @placeholder = "Enter address" })
+                            @Html.ValidationMessageFor(model => model.Address)
+                        </div>
+                        <div class="form-group" id="editeForm">
+                            @Html.LabelFor(m => m.Email)
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @type = "text", @placeholder = "Enter email" })
+                            @Html.ValidationMessageFor(model => model.Email)
+                        </div>
+                        <div class="form-group" id="editeForm">
+                            @Html.LabelFor(m => m.Birth)
+                            @Html.TextBoxFor(m => m.Birth, new { @class = "form-control", @type = "text", @placeholder = "Enter date" })
+                            @Html.ValidationMessageFor(model => model.Birth)
+                        </div>
+                        <input id="editeBtn" type="submit" class="btn btn-success" value="Обновить" />
+                    }
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(() => {
+        showClientEdit();
+    });
+
+    $('form').on('submit', function (event) {
+        event.preventDefault();
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("EditClient", "Admin")',
+            data: $('form').serialize(),
+            success: function (result) {
+                if (result.result) {
+                    hideClientEdit();
+                    openClientform();
+                }
+                else {
+                    alert("Невохможно обновить информацию!");
+                }
+            }
+        });
+    });
+
+    showClientEdit = function () {
+        $("#modalEdit").modal();
+    }
+
+    hideClientEdit = function () {
+        $("#modalEdit").modal('hide');
+    }
+</script>

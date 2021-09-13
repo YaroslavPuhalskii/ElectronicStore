@@ -1,4 +1,4 @@
-﻿@model ElectronicStore.WebUI.Models.ProductEditView
+﻿@model ElectronicStore.WebUI.Models.SellerEditView
 
 <div id="modalEdit" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="nameModalOperation" aria-hidden="true">
     <div class="modal-dialog">
@@ -13,7 +13,7 @@
                     {
                         <label id="serverError"></label>
                         @Html.ValidationSummary(false)
-                        @Html.HiddenFor(m => m.ProductId)
+                        @Html.HiddenFor(m => m.SellerId)
                         <div class="form-group" id="editeForm">
                             @Html.LabelFor(m => m.Name)
                             @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @type = "text", @placeholder = "Enter name" })
@@ -25,18 +25,13 @@
                             @Html.ValidationMessageFor(model => model.Description)
                         </div>
                         <div class="form-group" id="editeForm">
-                            @Html.LabelFor(m => m.Category)
-                            @Html.TextBoxFor(m => m.Category, new { @class = "form-control", @type = "text", @placeholder = "Enter category" })
-                            @Html.ValidationMessageFor(model => model.Category)
-                        </div>
-                        <div class="form-group" id="editeForm">
-                            @Html.LabelFor(m => m.Price)
-                            @Html.TextBoxFor(m => m.Price, new { @class = "form-control", @type = "text", @placeholder = "Enter price" })
-                            @Html.ValidationMessageFor(model => model.Price)
+                            @Html.LabelFor(m => m.Birth)
+                            @Html.TextBoxFor(m => m.Birth, new { @class = "form-control", @type = "text", @placeholder = "Enter category" })
+                            @Html.ValidationMessageFor(model => model.Birth)
                         </div>
                         <input id="editeBtn" type="submit" class="btn btn-success" value="Обновить" />
                     }
-                    </form>
+                </form>
             </div>
         </div>
     </div>
@@ -44,7 +39,7 @@
 
 <script type="text/javascript">
     $('#modalEdit').ready(() => {
-        showEdit();
+        showSellerEdit();
     });
 
     $('form').on("submit", function (event) {
@@ -52,25 +47,25 @@
 
         $.ajax({
             type: 'POST',
-            url: '@Url.Action("EditProduct", "Admin")',
+            url: '@Url.Action("EditSeller", "Admin")',
             data: $('form').serialize(),
             success: function (result) {
                 if (result.result) {
-                    hideProductEdit();
-                    openProductsform();
+                    hideSellerEdit();
+                    openSellerform();
                 }
                 else {
-                    alert("Невозможно произвести действие!");
+                    alert("Невозможно обновить информацию!");
                 }
             }
         });
     });
 
-    showEdit = function () {
-        $('#modalEdit').modal();
+    showSellerEdit = function () {
+        $("#modalEdit").modal();
     }
 
-    hideProductEdit = function () {
-        $('#modalEdit').modal('hide');
+    hideSellerEdit = function () {
+        $("#modalEdit").modal('hide');
     }
 </script>

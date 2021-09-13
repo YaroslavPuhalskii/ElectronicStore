@@ -40,7 +40,7 @@ namespace ElectronicStore.WebUI.Models
         [Required(ErrorMessage = "Введите дату основания")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
-        public DateTime Bith { get; set; }
+        public DateTime Birth { get; set; }
     }
 
     public class SellerCreateView
