@@ -11,6 +11,7 @@ using System.Web.Mvc;
 
 namespace ElectronicStore.WebUI.Controllers
 {
+    [Authorize]
     public class AdminController : Controller
     {
         private IClientRepo clientRepo = new ClientRepo();
@@ -338,6 +339,10 @@ namespace ElectronicStore.WebUI.Controllers
                 var config = new MapperConfiguration(cfg => cfg.CreateMap<Sale, SaleEditView>());
                 var map = new Mapper(config);
                 var sale = map.Map<Sale, SaleEditView>(await saleRepo.GetById(id));
+
+                ViewBag.Clients = new SelectList(await clientRepo.GetItems(), "ClientId", "FirstName");
+                ViewBag.Products = new SelectList(await productRepo.GetItems(), "ProductId", "Name");
+                ViewBag.Sellers = new SelectList(await sellerRepo.GetItems(), "SellerId", "Name");
 
                 return PartialView(sale);
             }

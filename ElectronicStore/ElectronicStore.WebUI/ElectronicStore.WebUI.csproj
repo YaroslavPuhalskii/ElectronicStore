@@ -138,6 +138,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\ClientController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -147,8 +148,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\Abstract\IAuthProvider.cs" />
+    <Compile Include="Infrastructure\Concrete\FormsAuthProvider.cs" />
     <Compile Include="Infrastructure\NinjectControllerFactory.cs" />
     <Compile Include="Models\ClientViewModels.cs" />
+    <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\ProductViewModels.cs" />
     <Compile Include="Models\SaleViewModels.cs" />
     <Compile Include="Models\SellerViewModels.cs" />
@@ -216,6 +220,7 @@
     <Content Include="Views\Admin\LoadSales.cshtml" />
     <Content Include="Views\Admin\CreateSale.cshtml" />
     <Content Include="Views\Admin\EditSale.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

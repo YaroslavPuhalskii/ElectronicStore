@@ -1,5 +1,7 @@
 ﻿using ElectronicStore.Core;
 using ElectronicStore.Core.Repositories;
+using ElectronicStore.WebUI.Infrastructure.Abstract;
+using ElectronicStore.WebUI.Infrastructure.Concrete;
 using Ninject;
 using System;
 using System.Collections.Generic;
@@ -32,6 +34,7 @@ namespace ElectronicStore.WebUI.Infrastructure
             ninjectKernel.Bind<IClientRepo>().To<ClientRepo>();
             ninjectKernel.Bind<ISellerRepo>().To<SellerRepo>();
             ninjectKernel.Bind<ISaleRepo>().To<SaleRepo>();
+            ninjectKernel.Bind<IAuthProvider>().To<FormsAuthProvider>();
         }
     }
 }
